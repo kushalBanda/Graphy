@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 
 export function activate(context: vscode.ExtensionContext) {
-	console.log('✅ Graphy extension is now active!');
+	console.log('Graphy extension is now active!');
 
 	// Register the hello world command
 	const disposable = vscode.commands.registerCommand('graphy.helloWorld', () => {
