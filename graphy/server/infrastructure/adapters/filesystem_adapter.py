@@ -7,7 +7,7 @@ from server.domain.entities.file_structure import FileStructure
 
 class FilesystemAdapter:
     """
-    Adapter for file system operations - analyzes directory structure
+    Adapter for file system operations analyzes directory structure
     """
     
     def analyze_project_structure(self, project_path: str) -> FileStructure:
