@@ -140,3 +140,14 @@ vite.config.ts.timestamp-*
 
 # Chat
 chat/*
+
+
+# AI files
+.cursor/*
+.claude/*
+
+
+CLAUDE.md
+AGENTS.md
+QWEN.md
+GEMINI.md
