@@ -7,7 +7,8 @@
     "type": "git",
     "url": "https://github.com/kushalBanda/Graphy.git"
   },
-  "version": "0.0.3",
+  "version": "0.0.4",
+  "icon": "assets/logo/Graphy1.0.png",
   "engines": {
     "vscode": "^1.91.0"
   },
