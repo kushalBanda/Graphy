@@ -2,14 +2,20 @@
   "name": "graphy",
   "displayName": "Graphy",
   "description": "Create a markdown file which is a graphical representation of the Codebase",
-  "version": "0.0.1",
+  "publisher": "kushalBanda",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kushalBanda/Graphy.git"
+  },
+  "version": "0.0.3",
   "engines": {
-    "vscode": "^1.80.0"
+    "vscode": "^1.91.0"
   },
   "categories": [
     "Other"
   ],
   "activationEvents": [
+    "onCommand:graphy.generateGraphy",
     "workspaceContains:**/package.json",
     "workspaceContains:**/*.py",
     "workspaceContains:**/*.js",
@@ -40,7 +46,7 @@
   },
   "devDependencies": {
     "@types/node": "^25.0.3",
-    "@types/vscode": "^1.107.0",
+    "@types/vscode": "^1.91.0",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "@vscode/test-cli": "^0.0.10",
