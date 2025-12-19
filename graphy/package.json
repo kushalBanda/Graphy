@@ -2,9 +2,14 @@
   "name": "graphy",
   "displayName": "Graphy",
   "description": "Create a markdown file which is a graphical representation of the Codebase",
+  "publisher": "kushalbanda",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kushalBanda/Graphy.git"
+  },
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.80.0"
+    "vscode": "^1.107.0"
   },
   "categories": [
     "Other"
