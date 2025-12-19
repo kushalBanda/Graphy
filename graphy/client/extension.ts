@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { GenerateGraphyCommand } from './commands/GenerateGraphyCommand';
+import { disposeLineLens, registerLineLens } from './linelens/LineLens';
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('Graphy extension is now active!');
@@ -12,6 +13,10 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(disposable);
     vscode.window.showInformationMessage('Graphy extension loaded! Use "Graphy: Generate Analysis" command.');
+
+    registerLineLens(context);
 }
 
-export function deactivate() {}
+export function deactivate() {
+    disposeLineLens();
+}
