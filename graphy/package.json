@@ -16,6 +16,7 @@
   ],
   "activationEvents": [
     "onCommand:graphy.generateGraphy",
+    "onCommand:linelens.refresh",
     "workspaceContains:**/package.json",
     "workspaceContains:**/*.py",
     "workspaceContains:**/*.js",
@@ -27,6 +28,10 @@
       {
         "command": "graphy.generateGraphy",
         "title": "Graphy: Generate Codebase Analysis"
+      },
+      {
+        "command": "linelens.refresh",
+        "title": "LineLens: Refresh Line Counts"
       }
     ]
   },
