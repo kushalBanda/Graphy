@@ -8,7 +8,7 @@ export class AnalysisOrchestrationService {
     }
 
     async execute(projectPath: string): Promise<any> {
-        try {``
+        try {
             const result = await this.filesystemAdapter.analyzeProjectStructure(projectPath);
             return result;
         } catch (error) {
