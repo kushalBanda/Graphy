@@ -2,16 +2,18 @@
 
 Graphy is a VS Code extension that generates a `Graphy.md` report for your workspace, summarizing the codebase structure with tree views, file counts, and extension breakdowns for quick AI-friendly context.
 
+## Details
+
+Graphy scans the first workspace folder, builds a lightweight structural summary, and writes a `Graphy.md` report at the workspace root. The report includes a directory tree, file counts, and extension breakdowns so you can share or paste a high-signal overview into AI tools or code reviews.
+
 ## Features
 
-- Workspace Analysis: Scans the active workspace and gathers structure stats
-- Graphy.md Output: Writes a markdown report at the workspace root
-- Directory Tree: Includes a readable tree of folders and files
-- File Summary: Lists total files, directories, and extension counts
-- One-Command Flow: Run `Graphy: Generate Analysis` from the Command Palette
-- Auto-Open: Opens the generated `Graphy.md` when complete
-- LineLens Badges: Shows line counts on files and folders in the Explorer
-- LineLens Refresh: Manually refresh line counts when needed
+- Graphy report generation via `Graphy: Generate Codebase Analysis`
+- `Graphy.md` output with file totals, directory totals, and extension breakdowns
+- Readable directory tree for quick navigation context
+- Auto-open of the generated report when finished
+- LineLens badges with line counts in the Explorer
+- Manual LineLens refresh via `LineLens: Refresh Line Counts`
 
 ## Screenshot
 
@@ -41,6 +43,10 @@ Once installed, open a folder in VS Code and run the command:
 ## Extension Settings
 
 This extension has no configurable settings at this time.
+
+## Changelog
+
+See `graphy/CHANGELOG.md` for release notes and feature history.
 
 ## License
 
