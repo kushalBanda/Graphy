@@ -9,12 +9,13 @@
   },
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.107.0"
+    "vscode": ">=1.107.0"
   },
   "categories": [
     "Other"
   ],
   "activationEvents": [
+    "onCommand:graphy.generateGraphy",
     "workspaceContains:**/package.json",
     "workspaceContains:**/*.py",
     "workspaceContains:**/*.js",
