@@ -10,7 +10,6 @@ export class GenerateGraphyCommand {
 
     async execute(): Promise<void> {
         try {
-            // Get the current workspace folder
             const workspaceFolders = vscode.workspace.workspaceFolders;
             if (!workspaceFolders) {
                 vscode.window.showErrorMessage('No workspace folder found. Please open a folder in VSCode.');
@@ -19,7 +18,6 @@ export class GenerateGraphyCommand {
 
             const projectPath = workspaceFolders[0].uri.fsPath;
 
-            // Show progress notification
             await vscode.window.withProgress({
                 location: vscode.ProgressLocation.Notification,
                 title: "Generating Graphy Analysis...",
@@ -27,12 +25,10 @@ export class GenerateGraphyCommand {
             }, async (progress) => {
                 progress.report({ message: "Starting analysis", increment: 0 });
 
-                // Execute the analysis - Python does the heavy lifting
                 const analysisResult = await this.analysisService.execute(projectPath);
 
                 progress.report({ message: "Creating Graphy.md", increment: 50 });
 
-                // Create and save the Graphy.md file
                 await this.createGraphyFile(analysisResult, projectPath);
 
                 progress.report({ message: "Analysis complete!", increment: 100 });
