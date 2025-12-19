@@ -5,9 +5,11 @@ import { FileStructure } from '../../domain/entities/FileStructure';
 export class FilesystemAdapter {
     async analyzeProjectStructure(projectPath: string): Promise<FileStructure> {
         return new Promise((resolve, reject) => {
-            const pythonScriptPath = path.join(process.cwd(), 'server', 'main.py');
+            const extensionRoot = path.join(__dirname, '..');
+            const pythonScriptPath = path.join(extensionRoot, 'server', 'main.py');
             const child = cp.spawn('uv', ['run', pythonScriptPath, projectPath], {
-                stdio: ['pipe', 'pipe', 'pipe']
+                stdio: ['pipe', 'pipe', 'pipe'],
+                cwd: extensionRoot
             });
 
             let output = '';
