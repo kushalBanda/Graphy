@@ -198,9 +198,11 @@ GEMINI.md
 
 # Graphy
 graphy-0.0.1.vsix
+*.vsix
+graphy/assets/logo/
 
 # Deployment
 Deploy.adoc
 
 # Logo
-assets/logo/*
+graphy/assets/logo/*
