@@ -45,9 +45,7 @@ export class GenerateGraphyCommand {
         }
     }
 
-    private async createGraphyFile(analysisResult: any, projectPath: string): Promise<void> {
-        // Create the markdown content from the analysis result
-        // Note: analysisResult uses camelCase properties (mapped from Python's snake_case)
+    private async createGraphyFile(analysisResult: any, projectPath: string): Promise<void> {   
         let markdownContent = `# Graphy Codebase Analysis\n\n`;
         markdownContent += `## Project: ${analysisResult.rootPath}\n\n`;
 
@@ -71,14 +69,12 @@ export class GenerateGraphyCommand {
             markdownContent += `\n... and ${files.length - 20} more files\n`;
         }
 
-        // Write the file to the project root
         const graphyFilePath = vscode.Uri.file(`${projectPath}/Graphy.md`);
         const encoder = new TextEncoder();
         const content = encoder.encode(markdownContent);
 
         await vscode.workspace.fs.writeFile(graphyFilePath, content);
 
-        // Optionally open the file in the editor
         const doc = await vscode.workspace.openTextDocument(graphyFilePath);
         await vscode.window.showTextDocument(doc);
     }

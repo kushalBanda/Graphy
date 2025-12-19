@@ -8,9 +8,7 @@ export class AnalysisOrchestrationService {
     }
 
     async execute(projectPath: string): Promise<any> {
-        try {
-            // Simply call the Python script and return its JSON output
-            // The actual analysis and processing happens in Python
+        try {``
             const result = await this.filesystemAdapter.analyzeProjectStructure(projectPath);
             return result;
         } catch (error) {
