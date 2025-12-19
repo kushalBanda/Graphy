@@ -15,8 +15,7 @@ Graphy is a VS Code extension that generates a `Graphy.md` report for your works
 
 ## Screenshot
 
-![Graphy with LineLens line counts](assets/Full.png)
-
+![Graphy with LineLens line counts](graphy/assets/Full.png)
 
 ## Usage
 
