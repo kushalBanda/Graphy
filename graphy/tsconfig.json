@@ -1,9 +1,11 @@
 {
 	"compilerOptions": {
-		"module": "Node16",
+		"module": "commonjs",
 		"target": "ES2022",
+		"outDir": "out",
 		"lib": [
-			"ES2022"
+			"ES2022",
+			"DOM"
 		],
 		"sourceMap": true,
 		"rootDir": "client",
@@ -11,12 +13,13 @@
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
-		"moduleResolution": "node16"
+		"moduleResolution": "node"
 	},
 	"exclude": [
 		"node_modules",
 		".vscode-test",
 		"dist",
-		"python_scripts"
+		"server",
+		"out"
 	]
 }
