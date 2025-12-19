@@ -4,8 +4,8 @@ import { AnalysisOrchestrationService } from '../application/services/AnalysisOr
 export class GenerateGraphyCommand {
     private analysisService: AnalysisOrchestrationService;
 
-    constructor(extensionPath: string) {
-        this.analysisService = new AnalysisOrchestrationService(extensionPath);
+    constructor() {
+        this.analysisService = new AnalysisOrchestrationService();
     }
 
     async execute(): Promise<void> {
