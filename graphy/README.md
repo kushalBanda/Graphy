@@ -8,12 +8,12 @@ Graphy scans the first workspace folder, builds a lightweight structural summary
 
 ## Features
 
-- Graphy report generation via `Graphy: Generate Codebase Analysis`
-- `Graphy.md` output with file totals, directory totals, and extension breakdowns
-- Readable directory tree for quick navigation context
-- Auto-open of the generated report when finished
-- LineLens badges with line counts in the Explorer
-- Manual LineLens refresh via `LineLens: Refresh Line Counts`
+- Generate a `Graphy.md` report from `Graphy: Generate Codebase Analysis`
+- Summaries for total files, total directories, and extension breakdowns
+- Readable directory tree for fast repo orientation
+- Auto-open the generated report on completion
+- LineLens badges showing line counts in the Explorer
+- Refresh LineLens data with `LineLens: Refresh Line Counts`
 
 ## Screenshot
 
