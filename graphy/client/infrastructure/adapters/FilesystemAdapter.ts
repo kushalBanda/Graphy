@@ -7,7 +7,10 @@ export class FilesystemAdapter {
         return new Promise((resolve, reject) => {
             const extensionRoot = path.join(__dirname, '..');
             const pythonScriptPath = path.join(extensionRoot, 'server', 'main.py');
-            const child = cp.spawn('uv', ['run', pythonScriptPath, projectPath], {
+            const pythonExecutable =
+                process.env.GRAPHY_PYTHON ||
+                (process.platform === 'win32' ? 'python' : 'python3');
+            const child = cp.spawn(pythonExecutable, [pythonScriptPath, projectPath], {
                 stdio: ['pipe', 'pipe', 'pipe'],
                 cwd: extensionRoot
             });
@@ -21,6 +24,10 @@ export class FilesystemAdapter {
 
             child.stderr.on('data', (data) => {
                 errorOutput += data.toString();
+            });
+
+            child.on('error', (error) => {
+                reject(new Error(`Failed to start Python: ${error.message}`));
             });
 
             child.on('close', (code) => {
