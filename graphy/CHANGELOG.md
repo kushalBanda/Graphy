@@ -2,8 +2,11 @@
 
 All notable changes to the "graphy" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
 ## [Unreleased]
 
-- Initial release
+- No changes yet.
+
+## [0.0.4]
+
+- Add Graphy report generation with directory tree and summary stats
+- Add LineLens line-count badges and manual refresh command

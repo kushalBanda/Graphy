@@ -7,7 +7,8 @@
     "type": "git",
     "url": "https://github.com/kushalBanda/Graphy.git"
   },
-  "version": "0.0.3",
+  "version": "0.0.5",
+  "icon": "assets/logo/Graphy1.1.png",
   "engines": {
     "vscode": "^1.91.0"
   },
@@ -16,6 +17,7 @@
   ],
   "activationEvents": [
     "onCommand:graphy.generateGraphy",
+    "onCommand:linelens.refresh",
     "workspaceContains:**/package.json",
     "workspaceContains:**/*.py",
     "workspaceContains:**/*.js",
@@ -27,6 +29,10 @@
       {
         "command": "graphy.generateGraphy",
         "title": "Graphy: Generate Codebase Analysis"
+      },
+      {
+        "command": "linelens.refresh",
+        "title": "LineLens: Refresh Line Counts"
       }
     ]
   },
