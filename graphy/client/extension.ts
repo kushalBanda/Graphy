@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(disposable);
-    vscode.window.showInformationMessage('Graphy extension loaded! Use "Graphy: Generate Analysis" command.');
+    vscode.window.showInformationMessage('Graphy extension loaded! Use "Graphy: Analyze Codebase" command.');
 
     registerLineLens(context);
 }
