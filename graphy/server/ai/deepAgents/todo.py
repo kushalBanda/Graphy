@@ -13,10 +13,8 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 deep_agent = create_deep_agent()
 
 # TodoListMiddleware is included by default in create_deep_agent
-# You can customize it if building a custom agent
 agent = create_agent(
     model="gpt-4o-mini",
-    # Custom planning instructions can be added via middleware
     middleware=[
         TodoListMiddleware(
             system_prompt="Use the write_todos list for what user asks" 
