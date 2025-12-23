@@ -1,14 +1,14 @@
 {
-  "name": "graphy",
-  "displayName": "Graphy",
-  "description": "Create a markdown file which is a graphical representation of the Codebase",
+  "name": "linetrace",
+  "displayName": "LineTrace",
+  "description": "LineTrace tracks where code is used and where it isn’t.",
   "publisher": "kushalBanda",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kushalBanda/Graphy.git"
+    "url": "https://github.com/kushalBanda/LineTrace.git"
   },
   "version": "0.0.6",
-  "icon": "assets/logo/Graphy1.1.png",
+  "icon": "assets/logo/LineTrace1.1.png",
   "engines": {
     "vscode": "^1.91.0"
   },
@@ -16,7 +16,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:graphy.generateGraphy",
+    "onCommand:linetrace.generateLineTrace",
     "onCommand:linelens.refresh",
     "workspaceContains:**/package.json",
     "workspaceContains:**/*.py",
@@ -27,8 +27,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "graphy.generateGraphy",
-        "title": "Graphy: Generate Codebase Analysis"
+        "command": "linetrace.generateLineTrace",
+        "title": "LineTrace: Generate Codebase Analysis"
       },
       {
         "command": "linelens.refresh",
