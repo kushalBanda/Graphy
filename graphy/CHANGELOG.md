@@ -1,6 +1,6 @@
 # Change Log
 
-All notable changes to the "graphy" extension will be documented in this file.
+All notable changes to the "linetrace" extension will be documented in this file.
 
 ## [Unreleased]
 
@@ -12,7 +12,7 @@ All notable changes to the "graphy" extension will be documented in this file.
 
 ## [0.0.3]
 
-- Add Graphy.md report output for analyzed repositories
+- Add LineTrace.md report output for analyzed repositories
 
 ## [0.0.2]
 
