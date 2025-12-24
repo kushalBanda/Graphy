@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Main entry point for the Graphy analysis engine
+Main entry point for the LineTrace analysis engine
 """
 import sys
 import json
