@@ -1,18 +1,18 @@
 import * as vscode from 'vscode';
-import { GenerateGraphyCommand } from './commands/GenerateGraphyCommand';
+import { GenerateLineTraceCommand } from './commands/GenerateLineTraceCommand';
 import { disposeLineLens, registerLineLens } from './linelens/LineLens';
 
 export function activate(context: vscode.ExtensionContext) {
-    console.log('Graphy extension is now active!');
+    console.log('LineTrace extension is now active!');
 
-    const generateGraphyCommand = new GenerateGraphyCommand();
+    const generateLineTraceCommand = new GenerateLineTraceCommand();
     const disposable = vscode.commands.registerCommand(
-        'graphy.generateGraphy', 
-        generateGraphyCommand.execute.bind(generateGraphyCommand)
+        'linetrace.generateLineTrace', 
+        generateLineTraceCommand.execute.bind(generateLineTraceCommand)
     );
 
     context.subscriptions.push(disposable);
-    vscode.window.showInformationMessage('Graphy extension loaded! Use "Graphy: Analyze Codebase" command.');
+    vscode.window.showInformationMessage('LineTrace extension loaded! Use "LineTrace: Generate Codebase Analysis" command.');
 
     registerLineLens(context);
 }

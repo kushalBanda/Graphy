@@ -1,5 +1,5 @@
 """
-Common path utilities for the Graphy server
+Common path utilities for the LineTrace server
 """
 from pathlib import Path
 import sys

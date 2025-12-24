@@ -9,12 +9,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL")
 
 deep_agent = create_deep_agent()
 
 # TodoListMiddleware is included by default in create_deep_agent
 agent = create_agent(
-    model="gpt-4o-mini",
+    model="claude_3_5_sonnet",
     middleware=[
         TodoListMiddleware(
             system_prompt="Use the write_todos list for what user asks" 
