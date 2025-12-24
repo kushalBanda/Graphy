@@ -1,0 +1,39 @@
+name: Publish Extension
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: graphy
+    env:
+      VSCE_PAT: ${{ secrets.publisher }}
+      OVSX_PAT: ${{ secrets.OPEN_VSX_SECRET }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: graphy/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish to VS Code Marketplace
+        run: npx vsce publish
+
+      - name: Publish to OpenVSX
+        run: npx ovsx publish
