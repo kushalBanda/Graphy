@@ -43,8 +43,6 @@ export class GenerateLineTraceCommand {
 
     private async createLineTraceFile(analysisResult: any, projectPath: string): Promise<void> {   
         let markdownContent = `# LineTrace Codebase Analysis\n\n`;
-        markdownContent += `## Project: ${analysisResult.rootPath}\n\n`;
-
         markdownContent += `### File Structure Summary\n`;
         markdownContent += `- Total Files: ${analysisResult.totalFiles}\n`;
         markdownContent += `- Total Directories: ${analysisResult.totalDirectories}\n`;
@@ -54,16 +52,6 @@ export class GenerateLineTraceCommand {
         markdownContent += '```\n';
         markdownContent += this.formatTree(analysisResult.structureTree || {}, '', true);
         markdownContent += '```\n\n';
-
-        markdownContent += `### File List\n`;
-        const files = analysisResult.files || [];
-        files.slice(0, 20).forEach((file: string) => {
-            markdownContent += `- ${file}\n`;
-        });
-
-        if (files.length > 20) {
-            markdownContent += `\n... and ${files.length - 20} more files\n`;
-        }
 
         const lineTraceFilePath = vscode.Uri.file(`${projectPath}/LineTrace.md`);
         const encoder = new TextEncoder();
