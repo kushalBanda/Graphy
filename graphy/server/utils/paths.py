@@ -1,24 +1,39 @@
-"""
-Common path utilities for the LineTrace server
-"""
 from pathlib import Path
 import sys
 
+
 def get_server_root() -> Path:
-    """Get the root directory of the server package"""
     return Path(__file__).parent.parent
 
+
 def get_project_root() -> Path:
-    """Get the root directory of the entire project (parent of server)"""
     return Path(__file__).parent.parent.parent
 
+
+def add_graphy_root_to_path():
+    graphy_root = get_project_root()
+    graphy_root_str = str(graphy_root)
+    if graphy_root_str not in sys.path:
+        sys.path.insert(0, graphy_root_str)
+
+
+def add_server_root_to_path():
+    server_root = get_server_root()
+    server_root_str = str(server_root)
+    if server_root_str not in sys.path:
+        sys.path.insert(0, server_root_str)
+
+
+def add_server_root_from_script(script_path: Path):
+    server_root = script_path.resolve().parents[2]
+    server_root_str = str(server_root)
+    if server_root_str not in sys.path:
+        sys.path.insert(0, server_root_str)
+
+
 def add_project_root_to_path():
-    """Add the project root directory to the Python path if not already present"""
-    project_root = get_project_root()
-    project_root_str = str(project_root)
+    add_graphy_root_to_path()
 
-    if project_root_str not in sys.path:
-        sys.path.insert(0, project_root_str)
 
-# Add the project root to the Python path when this module is imported
+add_server_root_to_path()
 add_project_root_to_path()

@@ -221,8 +221,6 @@ async function initializeDecorations(provider: LineLensDecorationProvider) {
     return;
   }
 
-  vscode.window.showInformationMessage('LineLens is counting lines in your files...');
-  vscode.window.setStatusBarMessage('LineLens: Initializing...', 2000);
 
   setTimeout(async () => {
     for (const folder of workspaceFolders) {
@@ -251,7 +249,6 @@ async function initializeDecorations(provider: LineLensDecorationProvider) {
     }
 
     isInitializing = false;
-    vscode.window.showInformationMessage('LineLens is ready!');
   }, DEFAULT_CONFIG.initialScanDelay);
 }
 
@@ -264,7 +261,6 @@ async function processBatchesWithDelay(
   for (let i = 0; i < files.length; i += batchSize) {
     const batch = files.slice(i, i + batchSize);
     if (i % 1000 === 0 && i > 0) {
-      vscode.window.setStatusBarMessage(`LineLens: Processing files (${i}/${files.length})...`, 2000);
     }
     provider.refresh(batch, { invalidate: true });
     await new Promise((resolve) => setTimeout(resolve, delayMs));

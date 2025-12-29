@@ -2,9 +2,10 @@
 
 All notable changes to the "linetrace" extension will be documented in this file.
 
-## [Unreleased]
+## [0.0.7]
 
-- Add LineLens line-count badges in the editor and a manual refresh command to regenerate counts
+- Simplify LineTrace report output by removing project path and file list sections
+- Reduce LineLens extension setup notifications, keep a single completion message after analysis
 
 ## [0.0.4]
 
