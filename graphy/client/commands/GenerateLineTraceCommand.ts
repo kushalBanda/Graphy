@@ -33,8 +33,8 @@ export class GenerateLineTraceCommand {
 
                 progress.report({ message: "Analysis complete!", increment: 100 });
             });
+            vscode.window.showInformationMessage('LineTrace complete.');
 
-            vscode.window.showInformationMessage('LineTrace analysis completed successfully!');
         } catch (error) {
             console.error('Error generating LineTrace analysis:', error);
             vscode.window.showErrorMessage(`Error generating LineTrace analysis: ${error instanceof Error ? error.message : 'Unknown error'}`);

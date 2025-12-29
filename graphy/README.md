@@ -19,7 +19,6 @@ LineTrace scans the first workspace folder, builds a lightweight structural summ
 
 ![LineTrace with LineLens line counts](assets/Full.png)
 
-
 ## Usage
 
 Once installed, open a folder in VS Code and run the command:

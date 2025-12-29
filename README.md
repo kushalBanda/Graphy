@@ -17,8 +17,7 @@ LineTrace scans the first workspace folder, builds a lightweight structural summ
 
 ## Screenshot
 
-![LineTrace with LineLens line counts](assets/Full.png)
-
+![LineTrace with LineLens line counts](graphy/assets/Full.png)
 
 ## Usage
 
