@@ -12,8 +12,6 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(disposable);
-    vscode.window.showInformationMessage('LineTrace extension loaded! Use "LineTrace: Generate Codebase Analysis" command.');
-
     registerLineLens(context);
 }
 
