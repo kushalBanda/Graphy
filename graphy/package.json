@@ -8,7 +8,7 @@
     "url": "https://github.com/kushalBanda/LineTrace.git"
   },
   "version": "0.0.8",
-  "icon": "assets/logo/LineTrace1.1.png",
+  "icon": "assets/icon.png",
   "engines": {
     "vscode": "^1.91.0"
   },
