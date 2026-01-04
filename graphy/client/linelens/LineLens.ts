@@ -24,6 +24,9 @@ const SKIPPED_FOLDERS = [
   'node_modules', '.git', 'dist', 'build', 'out', 'bin', 'obj',
   '.vscode', '.idea', '.vs', 'vendor', 'coverage', '.next', '.nuxt',
   'public/assets', 'static/assets', 'target', '.sass-cache', '.cache',
+  'venv', '.venv', '.tox', '__pycache__', '.pytest_cache',
+  '.mypy_cache', '.ruff_cache', '.gradle', '.m2', '.cargo',
+  '.npm', '.yarn', '.pnpm-store', '.bundle',
 ];
 
 const SKIP_EXTENSIONS = [
@@ -40,7 +43,7 @@ const CODE_FILE_EXTENSIONS = [
 ];
 
 const CODE_GLOB = `**/*.{${CODE_FILE_EXTENSIONS.map((ext) => ext.slice(1)).join(',')}}`;
-const EXCLUDE_GLOB = '{**/node_modules/**,**/.git/**,**/dist/**,**/build/**,**/out/**,**/.vscode/**,**/bin/**,**/obj/**,**/.idea/**,**/.vs/**,**/vendor/**,**/coverage/**}';
+const EXCLUDE_GLOB = '{**/node_modules/**,**/.git/**,**/dist/**,**/build/**,**/out/**,**/.vscode/**,**/bin/**,**/obj/**,**/.idea/**,**/.vs/**,**/vendor/**,**/coverage/**,**/venv/**,**/.venv/**,**/.tox/**,**/__pycache__/**,**/.pytest_cache/**,**/.mypy_cache/**,**/.ruff_cache/**,**/.gradle/**,**/.m2/**,**/.cargo/**,**/.npm/**,**/.yarn/**,**/.pnpm-store/**,**/.bundle/**}';
 
 async function countLines(filePath: string): Promise<number> {
   try {
