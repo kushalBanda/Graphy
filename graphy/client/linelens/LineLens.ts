@@ -39,7 +39,7 @@ const SKIP_EXTENSIONS = [
 const CODE_FILE_EXTENSIONS = [
   '.js', '.jsx', '.ts', '.tsx', '.html', '.css', '.scss', '.less',
   '.go', '.py', '.java', '.c', '.cpp', '.cs', '.php', '.rb', '.rs',
-  '.json', '.yaml', '.yml', '.xml', '.md', '.txt',
+  '.json', '.yaml', '.yml', '.xml', '.md', '.adoc', '.txt',
 ];
 
 const CODE_GLOB = `**/*.{${CODE_FILE_EXTENSIONS.map((ext) => ext.slice(1)).join(',')}}`;
