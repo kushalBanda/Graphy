@@ -6,7 +6,6 @@ All notable changes to the "linetrace" extension will be documented in this file
 
 - Ignore virtual environments and dependency/cache directories in LineTrace and LineLens scans
 - Include `.adoc` files in LineLens line counts
-- Update extension icon path to `assets/icon.png`
 
 ## [0.0.7]
 

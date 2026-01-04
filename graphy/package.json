@@ -1,7 +1,7 @@
 {
   "name": "linetrace",
   "displayName": "LineTrace",
-  "description": "LineTrace tracks where code is used and where it isn’t.",
+  "description": "LineTrace tracks where code is used and where it isn't.",
   "publisher": "kushalBanda",
   "repository": {
     "type": "git",
