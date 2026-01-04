@@ -5,6 +5,31 @@ from pathlib import Path
 # Using absolute import since path is added in main.py
 from server.domain.entities.file_structure import FileStructure
 
+IGNORED_DIRS = {
+    '.git',
+    '.vscode',
+    '__pycache__',
+    'node_modules',
+    'venv',
+    '.venv',
+    '.tox',
+    '.pytest_cache',
+    '.mypy_cache',
+    '.ruff_cache',
+    'vendor',
+    'dist',
+    'build',
+    'out',
+    'target',
+    '.gradle',
+    '.m2',
+    '.cargo',
+    '.npm',
+    '.yarn',
+    '.pnpm-store',
+    '.bundle',
+}
+
 class FilesystemAdapter:
     """
     Adapter for file system operations analyzes directory structure
@@ -21,7 +46,7 @@ class FilesystemAdapter:
         
         for root, dirs, file_list in os.walk(project_path):
             # Skip hidden directories and common ignore directories
-            dirs[:] = [d for d in dirs if not d.startswith('.') and d not in ['node_modules', '__pycache__', '.git', '.vscode']]
+            dirs[:] = [d for d in dirs if not d.startswith('.') and d not in IGNORED_DIRS]
             
             for file in file_list:
                 if not file.startswith('.'):
@@ -36,7 +61,7 @@ class FilesystemAdapter:
         # Get all directories
         for root, dirs, _ in os.walk(project_path):
             # Skip hidden and common ignore directories
-            dirs[:] = [d for d in dirs if not d.startswith('.') and d not in ['node_modules', '__pycache__', '.git', '.vscode']]
+            dirs[:] = [d for d in dirs if not d.startswith('.') and d not in IGNORED_DIRS]
             for d in dirs:
                 dir_path = os.path.join(root, d)
                 directories.append(dir_path)
@@ -59,7 +84,7 @@ class FilesystemAdapter:
         
         try:
             for item in os.listdir(path):
-                if item.startswith('.') or item in ['node_modules', '__pycache__', '.git', '.vscode']:
+                if item.startswith('.') or item in IGNORED_DIRS:
                     continue
                     
                 item_path = os.path.join(path, item)
