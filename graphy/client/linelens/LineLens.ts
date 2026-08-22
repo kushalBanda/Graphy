@@ -166,7 +166,7 @@ function shouldSkipFile(filePath: string): boolean {
     return true;
   }
 
-  return true;
+  return false;
 }
 
 function invalidateFolderCounts(filePath: string) {
@@ -263,8 +263,6 @@ async function processBatchesWithDelay(
 ): Promise<void> {
   for (let i = 0; i < files.length; i += batchSize) {
     const batch = files.slice(i, i + batchSize);
-    if (i % 1000 === 0 && i > 0) {
-    }
     provider.refresh(batch, { invalidate: true });
     await new Promise((resolve) => setTimeout(resolve, delayMs));
   }
@@ -441,7 +439,6 @@ class LineLensDecorationProvider implements vscode.FileDecorationProvider {
 
   private flushUpdates() {
     if (this.pendingUpdates.size === 0) {
-      this._onDidChangeFileDecorations.fire([]);
       return;
     }
 
@@ -554,18 +551,26 @@ function setupFileWatcher(context: vscode.ExtensionContext, provider: LineLensDe
   };
 }
 
+const queueUpdateTimers = new Map<string, NodeJS.Timeout>();
+
 function queueUpdate(
   uri: vscode.Uri,
   provider: LineLensDecorationProvider,
   delay: number = DEFAULT_CONFIG.debounceDelay,
 ) {
-  if (debounceTimer) {
-    clearTimeout(debounceTimer);
+  const key = uri.fsPath;
+  const existingTimer = queueUpdateTimers.get(key);
+  if (existingTimer) {
+    clearTimeout(existingTimer);
   }
 
-  debounceTimer = setTimeout(() => {
-    provider.refresh(uri, { invalidate: true });
-  }, delay);
+  queueUpdateTimers.set(
+    key,
+    setTimeout(() => {
+      queueUpdateTimers.delete(key);
+      provider.refresh(uri, { invalidate: true });
+    }, delay),
+  );
 }
 
 export function registerLineLens(context: vscode.ExtensionContext) {
@@ -608,6 +613,9 @@ export function disposeLineLens() {
   if (debounceTimer) {
     clearTimeout(debounceTimer);
   }
+
+  queueUpdateTimers.forEach((timer) => clearTimeout(timer));
+  queueUpdateTimers.clear();
 
   if (fileWatcher) {
     fileWatcher.dispose();
