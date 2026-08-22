@@ -20,7 +20,7 @@ const DEFAULT_CONFIG = {
   maxFolderFiles: 10000,
 };
 
-const SKIPPED_FOLDERS = [
+export const SKIPPED_FOLDERS = [
   'node_modules', '.git', 'dist', 'build', 'out', 'bin', 'obj',
   '.vscode', '.idea', '.vs', 'vendor', 'coverage', '.next', '.nuxt',
   'public/assets', 'static/assets', 'target', '.sass-cache', '.cache',
@@ -42,10 +42,12 @@ const CODE_FILE_EXTENSIONS = [
   '.json', '.yaml', '.yml', '.xml', '.md', '.adoc', '.txt',
 ];
 
-const CODE_GLOB = `**/*.{${CODE_FILE_EXTENSIONS.map((ext) => ext.slice(1)).join(',')}}`;
-const EXCLUDE_GLOB = '{**/node_modules/**,**/.git/**,**/dist/**,**/build/**,**/out/**,**/.vscode/**,**/bin/**,**/obj/**,**/.idea/**,**/.vs/**,**/vendor/**,**/coverage/**,**/venv/**,**/.venv/**,**/.tox/**,**/__pycache__/**,**/.pytest_cache/**,**/.mypy_cache/**,**/.ruff_cache/**,**/.gradle/**,**/.m2/**,**/.cargo/**,**/.npm/**,**/.yarn/**,**/.pnpm-store/**,**/.bundle/**}';
+export const CODE_GLOB = `**/*.{${CODE_FILE_EXTENSIONS.map((ext) => ext.slice(1)).join(',')}}`;
+export const EXCLUDE_GLOB = '{**/node_modules/**,**/.git/**,**/dist/**,**/build/**,**/out/**,**/.vscode/**,**/bin/**,**/obj/**,**/.idea/**,**/.vs/**,**/vendor/**,**/coverage/**,**/venv/**,**/.venv/**,**/.tox/**,**/__pycache__/**,**/.pytest_cache/**,**/.mypy_cache/**,**/.ruff_cache/**,**/.gradle/**,**/.m2/**,**/.cargo/**,**/.npm/**,**/.yarn/**,**/.pnpm-store/**,**/.bundle/**}';
 
-async function countLines(filePath: string): Promise<number> {
+export const LINE_LENS_CONFIG = DEFAULT_CONFIG;
+
+export async function countLines(filePath: string): Promise<number> {
   try {
     const stats = await fs.promises.stat(filePath);
     if (!stats.isFile()) {
@@ -140,7 +142,7 @@ function formatLineCount(count: number): string {
   return count.toString();
 }
 
-function shouldSkipFolder(folderPath: string): boolean {
+export function shouldSkipFolder(folderPath: string): boolean {
   for (const folder of SKIPPED_FOLDERS) {
     const folderPattern = `${path.sep}${folder}${path.sep}`;
     const endPattern = `${path.sep}${folder}`;

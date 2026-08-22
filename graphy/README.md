@@ -1,6 +1,10 @@
-# LineTrace
+<p align="center">
+  <img src="assets/icon.png" alt="LineTrace logo" width="128" />
+</p>
 
-LineTrace tracks where code is used and where it isn’t.
+<h1 align="center">LineTrace</h1>
+
+<p align="center">LineTrace tracks where code is used and where it isn't.</p>
 
 ## Details
 
@@ -14,10 +18,12 @@ LineTrace scans the first workspace folder, builds a lightweight structural summ
 - Auto-open the generated report on completion
 - LineLens badges showing line counts in the Explorer
 - Refresh LineLens data with `LineLens: Refresh Line Counts`
+- Line Rank panel in the Explorer, ranking files and folders by line count with a per-language breakdown
+- Refresh Line Rank with `LineTrace: Refresh Line Rank`
 
 ## Screenshot
 
-![LineTrace with LineLens line counts](assets/Full.png)
+![LineTrace with LineLens line counts](assets/full.png)
 
 ## Usage
 
