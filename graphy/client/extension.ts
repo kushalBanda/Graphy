@@ -1,15 +1,15 @@
 import * as vscode from 'vscode';
-import { GenerateLineTraceCommand } from './commands/GenerateLineTraceCommand';
+import { GenerateGraphyCommand } from './commands/GenerateGraphyCommand';
 import { disposeLineLens, registerLineLens } from './linelens/LineLens';
 import { registerLineRank } from './linelens/LineRankProvider';
 
 export function activate(context: vscode.ExtensionContext) {
-    console.log('LineTrace extension is now active!');
+    console.log('Graphy extension is now active!');
 
-    const generateLineTraceCommand = new GenerateLineTraceCommand();
+    const generateGraphyCommand = new GenerateGraphyCommand();
     const disposable = vscode.commands.registerCommand(
-        'linetrace.generateLineTrace',
-        generateLineTraceCommand.execute.bind(generateLineTraceCommand)
+        'graphy.generateGraphy',
+        generateGraphyCommand.execute.bind(generateGraphyCommand)
     );
 
     context.subscriptions.push(disposable);

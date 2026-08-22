@@ -4,12 +4,12 @@ import { LineRankProvider, LineRankItem } from '../linelens/LineRankProvider';
 
 suite('LineRank', () => {
   test('extension activates and registers the refresh command', async () => {
-    const ext = vscode.extensions.getExtension('kushalBanda.linetrace');
+    const ext = vscode.extensions.getExtension('kushalBanda.graphy');
     assert.ok(ext, 'extension not found');
     await ext!.activate();
 
     const commands = await vscode.commands.getCommands(true);
-    assert.ok(commands.includes('linetrace.refreshRank'), 'refresh command not registered');
+    assert.ok(commands.includes('graphy.refreshRank'), 'refresh command not registered');
   });
 
   test('root items are ranked by line count and end with a Total row', async () => {

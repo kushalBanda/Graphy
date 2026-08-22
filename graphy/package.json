@@ -1,14 +1,14 @@
 {
-  "name": "linetrace",
-  "displayName": "LineTrace",
-  "description": "LineTrace tracks where code is used and where it isn't.",
+  "name": "graphy",
+  "displayName": "Graphy",
+  "description": "Graphy tracks where code is used and where it isn't.",
   "publisher": "kushalBanda",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kushalBanda/LineTrace.git"
+    "url": "https://github.com/kushalBanda/Graphy.git"
   },
-  "version": "0.0.9",
-  "icon": "assets/icon.png",
+  "version": "0.0.7",
+  "icon": "assets/Graphy.png",
   "engines": {
     "vscode": "^1.91.0"
   },
@@ -16,7 +16,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:linetrace.generateLineTrace",
+    "onCommand:graphy.generateGraphy",
     "onCommand:linelens.refresh",
     "workspaceContains:**/package.json",
     "workspaceContains:**/*.py",
@@ -27,33 +27,33 @@
   "contributes": {
     "commands": [
       {
-        "command": "linetrace.generateLineTrace",
-        "title": "LineTrace: Generate Codebase Analysis"
+        "command": "graphy.generateGraphy",
+        "title": "Graphy: Generate Codebase Analysis"
       },
       {
         "command": "linelens.refresh",
         "title": "LineLens: Refresh Line Counts"
       },
       {
-        "command": "linetrace.refreshRank",
-        "title": "LineTrace: Refresh Line Rank",
+        "command": "graphy.refreshRank",
+        "title": "Graphy: Refresh Line Rank",
         "icon": "$(refresh)"
       }
     ],
     "views": {
       "explorer": [
         {
-          "id": "lineTraceRank",
+          "id": "graphyLineRank",
           "name": "Line Rank",
-          "contextualTitle": "LineTrace"
+          "contextualTitle": "Graphy"
         }
       ]
     },
     "menus": {
       "view/title": [
         {
-          "command": "linetrace.refreshRank",
-          "when": "view == lineTraceRank",
+          "command": "graphy.refreshRank",
+          "when": "view == graphyLineRank",
           "group": "navigation"
         }
       ]

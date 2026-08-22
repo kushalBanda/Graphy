@@ -177,10 +177,10 @@ export class LineRankProvider implements vscode.TreeDataProvider<LineRankItem> {
 export function registerLineRank(context: vscode.ExtensionContext): LineRankProvider {
   const provider = new LineRankProvider();
 
-  context.subscriptions.push(vscode.window.registerTreeDataProvider('lineTraceRank', provider));
+  context.subscriptions.push(vscode.window.registerTreeDataProvider('graphyLineRank', provider));
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('linetrace.refreshRank', () => provider.refresh()),
+    vscode.commands.registerCommand('graphy.refreshRank', () => provider.refresh()),
   );
 
   context.subscriptions.push(

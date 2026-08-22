@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { AnalysisOrchestrationService } from '../application/services/AnalysisOrchestrationService';
 
-export class GenerateLineTraceCommand {
+export class GenerateGraphyCommand {
     private analysisService: AnalysisOrchestrationService;
 
     constructor() {
@@ -20,29 +20,29 @@ export class GenerateLineTraceCommand {
 
             await vscode.window.withProgress({
                 location: vscode.ProgressLocation.Notification,
-                title: "Generating LineTrace Analysis...",
+                title: "Generating Graphy Analysis...",
                 cancellable: false
             }, async (progress) => {
                 progress.report({ message: "Starting analysis", increment: 0 });
 
                 const analysisResult = await this.analysisService.execute(projectPath);
 
-                progress.report({ message: "Creating LineTrace.md", increment: 50 });
+                progress.report({ message: "Creating Graphy.md", increment: 50 });
 
-                await this.createLineTraceFile(analysisResult, projectPath);
+                await this.createGraphyFile(analysisResult, projectPath);
 
                 progress.report({ message: "Analysis complete!", increment: 100 });
             });
-            vscode.window.showInformationMessage('LineTrace complete.');
+            vscode.window.showInformationMessage('Graphy complete.');
 
         } catch (error) {
-            console.error('Error generating LineTrace analysis:', error);
-            vscode.window.showErrorMessage(`Error generating LineTrace analysis: ${error instanceof Error ? error.message : 'Unknown error'}`);
+            console.error('Error generating Graphy analysis:', error);
+            vscode.window.showErrorMessage(`Error generating Graphy analysis: ${error instanceof Error ? error.message : 'Unknown error'}`);
         }
     }
 
-    private async createLineTraceFile(analysisResult: any, projectPath: string): Promise<void> {   
-        let markdownContent = `# LineTrace Codebase Analysis\n\n`;
+    private async createGraphyFile(analysisResult: any, projectPath: string): Promise<void> {
+        let markdownContent = `# Graphy Codebase Analysis\n\n`;
         markdownContent += `### File Structure Summary\n`;
         markdownContent += `- Total Files: ${analysisResult.totalFiles}\n`;
         markdownContent += `- Total Directories: ${analysisResult.totalDirectories}\n`;
@@ -53,13 +53,13 @@ export class GenerateLineTraceCommand {
         markdownContent += this.formatTree(analysisResult.structureTree || {}, '', true);
         markdownContent += '```\n\n';
 
-        const lineTraceFilePath = vscode.Uri.file(`${projectPath}/LineTrace.md`);
+        const graphyFilePath = vscode.Uri.file(`${projectPath}/Graphy.md`);
         const encoder = new TextEncoder();
         const content = encoder.encode(markdownContent);
 
-        await vscode.workspace.fs.writeFile(lineTraceFilePath, content);
+        await vscode.workspace.fs.writeFile(graphyFilePath, content);
 
-        const doc = await vscode.workspace.openTextDocument(lineTraceFilePath);
+        const doc = await vscode.workspace.openTextDocument(graphyFilePath);
         await vscode.window.showTextDocument(doc);
     }
 

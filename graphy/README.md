@@ -1,36 +1,36 @@
 <p align="center">
-  <img src="assets/icon.png" alt="LineTrace logo" width="128" />
+  <img src="assets/Graphy.png" alt="Graphy logo" width="128" />
 </p>
 
-<h1 align="center">LineTrace</h1>
+<h1 align="center">Graphy</h1>
 
-<p align="center">LineTrace tracks where code is used and where it isn't.</p>
+<p align="center">Graphy tracks where code is used and where it isn't.</p>
 
 ## Details
 
-LineTrace scans the first workspace folder, builds a lightweight structural summary, and writes a `LineTrace.md` report at the workspace root. The report includes a directory tree, file counts, and extension breakdowns so you can share or paste a high-signal overview into AI tools or code reviews.
+Graphy scans the first workspace folder, builds a lightweight structural summary, and writes a `Graphy.md` report at the workspace root. The report includes a directory tree, file counts, and extension breakdowns so you can share or paste a high-signal overview into AI tools or code reviews.
 
 ## Features
 
-- Generate a `LineTrace.md` report from `LineTrace: Generate Codebase Analysis`
+- Generate a `Graphy.md` report from `Graphy: Generate Codebase Analysis`
 - Summaries for total files, total directories, and extension breakdowns
 - Readable directory tree for fast repo orientation
 - Auto-open the generated report on completion
 - LineLens badges showing line counts in the Explorer
 - Refresh LineLens data with `LineLens: Refresh Line Counts`
 - Line Rank panel in the Explorer, ranking files and folders by line count with a per-language breakdown
-- Refresh Line Rank with `LineTrace: Refresh Line Rank`
+- Refresh Line Rank with `Graphy: Refresh Line Rank`
 
 ## Screenshot
 
-![LineTrace with LineLens line counts](assets/full.png)
+![Graphy with LineLens line counts](assets/full.png)
 
 ## Usage
 
 Once installed, open a folder in VS Code and run the command:
 
-- Command Palette: `LineTrace: Generate Codebase Analysis`
-- Output: A `LineTrace.md` file appears in the workspace root and opens automatically
+- Command Palette: `Graphy: Generate Codebase Analysis`
+- Output: A `Graphy.md` file appears in the workspace root and opens automatically
 - LineLens: Line counts appear next to files and folders in the Explorer
 - Manual refresh: Run `LineLens: Refresh Line Counts`
 
@@ -43,7 +43,7 @@ Once installed, open a folder in VS Code and run the command:
 
 1. Install the extension from the VS Code Marketplace
 2. Reload VS Code
-3. Run `LineTrace: Generate Codebase Analysis` from the Command Palette
+3. Run `Graphy: Generate Codebase Analysis` from the Command Palette
 
 ## Extension Settings
 
