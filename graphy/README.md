@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/Graphy.png" alt="Graphy logo" width="128" />
+  <img src="https://raw.githubusercontent.com/kushalBanda/Graphy/main/graphy/assets/icon.png" alt="Graphy logo" width="128" />
 </p>
 
 <h1 align="center">Graphy</h1>
@@ -9,6 +9,10 @@
 ## Details
 
 Graphy scans the first workspace folder, builds a lightweight structural summary, and writes a `Graphy.md` report at the workspace root. The report includes a directory tree, file counts, and extension breakdowns so you can share or paste a high-signal overview into AI tools or code reviews.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kushalBanda/Graphy/main/graphy/assets/Graphy.png" alt="Graphy.md report open in the editor" width="640" />
+</p>
 
 ## Features
 
@@ -23,7 +27,7 @@ Graphy scans the first workspace folder, builds a lightweight structural summary
 
 ## Screenshot
 
-![Graphy with LineLens line counts](assets/full.png)
+![Graphy with LineLens line counts](https://raw.githubusercontent.com/kushalBanda/Graphy/main/graphy/assets/full.png)
 
 ## Usage
 

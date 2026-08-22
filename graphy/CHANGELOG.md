@@ -2,6 +2,11 @@
 
 All notable changes to the "graphy" extension will be documented in this file.
 
+## [0.0.8]
+
+- Fix logo and screenshot not rendering on the Marketplace/OpenVSX listing pages (relative HTML `<img>` paths aren't rewritten by either registry; switched to absolute GitHub raw URLs)
+- Fix package/README icon pointing at the Graphy.md report screenshot instead of the actual logo; add the report screenshot as an in-body image instead
+
 ## [0.0.7]
 
 - Add Line Rank panel, nested in the Explorer, ranking files and folders by line count with an expandable per-language breakdown and a workspace line total
