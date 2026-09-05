@@ -180,24 +180,18 @@ htmlcov/
 dmypy.json
 .pyre/
 .pytype/
+Deploy.adoc
 cython_debug/
 
 # Chat
 chat/*
 
 # AI generated files
-.cursor/*
-.claude/*
-
-
+.cursor/
+.claude/
+.codegraph/
 CLAUDE.md
 AGENTS.md
-QWEN.md
-GEMINI.md
-
 
 # Graphy
 *.vsix
-
-# Deployment
-Deploy.adoc

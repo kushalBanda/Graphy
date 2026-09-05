@@ -11,6 +11,7 @@
 		"rootDir": "client",
 		"strict": true,
 		"esModuleInterop": true,
+		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		"moduleResolution": "node"

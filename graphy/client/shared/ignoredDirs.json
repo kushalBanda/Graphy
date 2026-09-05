@@ -1,0 +1,40 @@
+{
+  "_comment": "Single source of truth for ignored directories. Loaded by both client/linelens/LineLens.ts and server/infrastructure/adapters/filesystem_adapter.py so client badges and server reports never diverge.",
+  "simpleNames": [
+    "node_modules",
+    ".git",
+    "dist",
+    "build",
+    "out",
+    "bin",
+    "obj",
+    ".vscode",
+    ".idea",
+    ".vs",
+    "vendor",
+    "coverage",
+    ".next",
+    ".nuxt",
+    "target",
+    ".sass-cache",
+    ".cache",
+    "venv",
+    ".venv",
+    ".tox",
+    "__pycache__",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".gradle",
+    ".m2",
+    ".cargo",
+    ".npm",
+    ".yarn",
+    ".pnpm-store",
+    ".bundle"
+  ],
+  "nestedPaths": [
+    "public/assets",
+    "static/assets"
+  ]
+}

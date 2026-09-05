@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import ignoredDirsConfig from '../shared/ignoredDirs.json';
 
 const lineCountCache = new Map<string, number>();
 const fileSizeCache = new Map<string, number>();
@@ -17,16 +18,16 @@ const DEFAULT_CONFIG = {
   debounceDelay: 300,
   initialScanDelay: 5000,
   estimationFactor: 50,
+  // Still consumed by LineRankProvider.ts's findFiles() scans; countFolderLines
+  // no longer needs it after its bottom-up recursive rewrite.
   maxFolderFiles: 10000,
 };
 
+// Sourced from client/shared/ignoredDirs.json — the same file the Python server
+// reads, so client badges and server reports agree on what's excluded.
 export const SKIPPED_FOLDERS = [
-  'node_modules', '.git', 'dist', 'build', 'out', 'bin', 'obj',
-  '.vscode', '.idea', '.vs', 'vendor', 'coverage', '.next', '.nuxt',
-  'public/assets', 'static/assets', 'target', '.sass-cache', '.cache',
-  'venv', '.venv', '.tox', '__pycache__', '.pytest_cache',
-  '.mypy_cache', '.ruff_cache', '.gradle', '.m2', '.cargo',
-  '.npm', '.yarn', '.pnpm-store', '.bundle',
+  ...ignoredDirsConfig.simpleNames,
+  ...ignoredDirsConfig.nestedPaths,
 ];
 
 const SKIP_EXTENSIONS = [
@@ -43,7 +44,10 @@ const CODE_FILE_EXTENSIONS = [
 ];
 
 export const CODE_GLOB = `**/*.{${CODE_FILE_EXTENSIONS.map((ext) => ext.slice(1)).join(',')}}`;
-export const EXCLUDE_GLOB = '{**/node_modules/**,**/.git/**,**/dist/**,**/build/**,**/out/**,**/.vscode/**,**/bin/**,**/obj/**,**/.idea/**,**/.vs/**,**/vendor/**,**/coverage/**,**/venv/**,**/.venv/**,**/.tox/**,**/__pycache__/**,**/.pytest_cache/**,**/.mypy_cache/**,**/.ruff_cache/**,**/.gradle/**,**/.m2/**,**/.cargo/**,**/.npm/**,**/.yarn/**,**/.pnpm-store/**,**/.bundle/**}';
+// Built from SKIPPED_FOLDERS so the glob and the display-skip list never drift apart.
+// Also excludes any dot-folder generically, mirroring shouldSkipFolder's fallback
+// and the server's `startswith('.')` rule.
+export const EXCLUDE_GLOB = `{${SKIPPED_FOLDERS.map((folder) => `**/${folder}/**`).join(',')},**/.*/**}`;
 
 export const LINE_LENS_CONFIG = DEFAULT_CONFIG;
 
@@ -90,6 +94,7 @@ export async function countLines(filePath: string): Promise<number> {
   } catch (error) {
     lineCountCache.delete(filePath);
     fileSizeCache.delete(filePath);
+    decorationCache.delete(filePath);
     console.error(`LineLens: error accessing ${filePath}`, error);
     return 0;
   }
@@ -143,13 +148,25 @@ function formatLineCount(count: number): string {
 }
 
 export function shouldSkipFolder(folderPath: string): boolean {
+  // Normalize to forward slashes so nested entries like "public/assets" match
+  // on Windows too, mirroring the server's os.sep-normalized comparison.
+  const normalizedPath = folderPath.split(path.sep).join('/');
+
   for (const folder of SKIPPED_FOLDERS) {
-    const folderPattern = `${path.sep}${folder}${path.sep}`;
-    const endPattern = `${path.sep}${folder}`;
-    if (folderPath.includes(folderPattern) || folderPath.endsWith(endPattern)) {
+    const normalizedFolder = folder.split(path.sep).join('/');
+    const folderPattern = `/${normalizedFolder}/`;
+    const endPattern = `/${normalizedFolder}`;
+    if (normalizedPath.includes(folderPattern) || normalizedPath.endsWith(endPattern)) {
       return true;
     }
   }
+
+  // Generic dot-folder skip, matching the server's `startswith('.')` rule, so
+  // folders like .github/.storybook aren't tracked client-side only.
+  if (path.basename(folderPath).startsWith('.')) {
+    return true;
+  }
+
   return false;
 }
 
@@ -171,39 +188,86 @@ function shouldSkipFile(filePath: string): boolean {
   return false;
 }
 
-function invalidateFolderCounts(filePath: string) {
+function getAncestorDirs(filePath: string): string[] {
+  const ancestors: string[] = [];
   let current = path.dirname(filePath);
   while (true) {
-    folderLineCountCache.delete(current);
-    decorationCache.delete(current);
+    ancestors.push(current);
     const parent = path.dirname(current);
     if (parent === current) {
       break;
     }
     current = parent;
   }
+  return ancestors;
 }
 
+function invalidateFolderCounts(filePath: string) {
+  for (const dir of getAncestorDirs(filePath)) {
+    folderLineCountCache.delete(dir);
+    decorationCache.delete(dir);
+  }
+}
+
+// Queues a decoration refresh for a file's whole ancestor chain, not just its
+// immediate parent, so folder badges above an unrendered directory don't go stale.
+function queueAncestorUpdates(
+  filePath: string,
+  provider: LineLensDecorationProvider,
+  delay?: number,
+) {
+  for (const dir of getAncestorDirs(filePath)) {
+    queueUpdate(vscode.Uri.file(dir), provider, delay);
+  }
+}
+
+function isCountableFile(filePath: string): boolean {
+  const ext = path.extname(filePath).toLowerCase();
+  return CODE_FILE_EXTENSIONS.includes(ext);
+}
+
+// Bottom-up, per-folder cached sum: each folder counts only its own direct
+// files and adds its direct subfolders' already-cached totals, recursing into
+// a subfolder only on a cache miss. This avoids re-globbing an entire subtree
+// on every call and keeps a folder's badge in sync with its actual children.
 async function countFolderLines(folderPath: string): Promise<number> {
   if (shouldSkipFolder(folderPath)) {
     return 0;
   }
 
+  const cached = folderLineCountCache.get(folderPath);
+  if (cached !== undefined) {
+    return cached;
+  }
+
   try {
-    const includePattern = new vscode.RelativePattern(folderPath, CODE_GLOB);
-    const files = await vscode.workspace.findFiles(
-      includePattern,
-      EXCLUDE_GLOB,
-      DEFAULT_CONFIG.maxFolderFiles,
-    );
+    const entries = await fs.promises.readdir(folderPath, { withFileTypes: true });
+
+    const filePaths: string[] = [];
+    const subfolders: string[] = [];
+    for (const entry of entries) {
+      const fullPath = path.join(folderPath, entry.name);
+      if (entry.isDirectory()) {
+        if (!shouldSkipFolder(fullPath)) {
+          subfolders.push(fullPath);
+        }
+      } else if (entry.isFile() && isCountableFile(fullPath)) {
+        filePaths.push(fullPath);
+      }
+    }
 
     let total = 0;
-    for (let i = 0; i < files.length; i += DEFAULT_CONFIG.batchSize) {
-      const batch = files.slice(i, i + DEFAULT_CONFIG.batchSize);
-      const counts = await Promise.all(batch.map((uri) => countLines(uri.fsPath)));
+    for (let i = 0; i < filePaths.length; i += DEFAULT_CONFIG.batchSize) {
+      const batch = filePaths.slice(i, i + DEFAULT_CONFIG.batchSize);
+      const counts = await Promise.all(batch.map((f) => countLines(f)));
       for (const count of counts) {
         total += count;
       }
+    }
+
+    const subtotals = await Promise.all(subfolders.map((f) => countFolderLines(f)));
+    for (const subtotal of subtotals) {
+      total += subtotal;
     }
 
     folderLineCountCache.set(folderPath, total);
@@ -473,7 +537,7 @@ function setupFileWatcher(context: vscode.ExtensionContext, provider: LineLensDe
       '**/*.{js,jsx,ts,tsx,py,java,c,cpp,cs,go}',
     );
 
-    const watcher = vscode.workspace.createFileSystemWatcher(highPriorityPattern, false, true, false);
+    const watcher = vscode.workspace.createFileSystemWatcher(highPriorityPattern, false, false, false);
 
     watcher.onDidCreate((uri: vscode.Uri) => {
       if (uri.scheme !== 'file' || shouldSkipFile(uri.fsPath)) {
@@ -481,7 +545,16 @@ function setupFileWatcher(context: vscode.ExtensionContext, provider: LineLensDe
       }
       invalidateFolderCounts(uri.fsPath);
       queueUpdate(uri, provider);
-      queueUpdate(vscode.Uri.file(path.dirname(uri.fsPath)), provider);
+      queueAncestorUpdates(uri.fsPath, provider);
+    });
+
+    watcher.onDidChange((uri: vscode.Uri) => {
+      if (uri.scheme !== 'file' || shouldSkipFile(uri.fsPath)) {
+        return;
+      }
+      invalidateFolderCounts(uri.fsPath);
+      queueUpdate(uri, provider);
+      queueAncestorUpdates(uri.fsPath, provider);
     });
 
     watcher.onDidDelete((uri: vscode.Uri) => {
@@ -489,7 +562,7 @@ function setupFileWatcher(context: vscode.ExtensionContext, provider: LineLensDe
       decorationCache.delete(uri.fsPath);
       fileSizeCache.delete(uri.fsPath);
       invalidateFolderCounts(uri.fsPath);
-      queueUpdate(vscode.Uri.file(path.dirname(uri.fsPath)), provider);
+      queueAncestorUpdates(uri.fsPath, provider);
     });
 
     context.subscriptions.push(watcher);
@@ -500,7 +573,7 @@ function setupFileWatcher(context: vscode.ExtensionContext, provider: LineLensDe
       '**/*.{html,css,scss,less,php,rb,rs,json,yaml,yml,xml,md,txt}',
     );
 
-    const lowPriorityWatcher = vscode.workspace.createFileSystemWatcher(lowPriorityPattern, false, true, false);
+    const lowPriorityWatcher = vscode.workspace.createFileSystemWatcher(lowPriorityPattern, false, false, false);
 
     lowPriorityWatcher.onDidCreate((uri: vscode.Uri) => {
       if (uri.scheme !== 'file' || shouldSkipFile(uri.fsPath)) {
@@ -508,7 +581,16 @@ function setupFileWatcher(context: vscode.ExtensionContext, provider: LineLensDe
       }
       invalidateFolderCounts(uri.fsPath);
       queueUpdate(uri, provider, 500);
-      queueUpdate(vscode.Uri.file(path.dirname(uri.fsPath)), provider, 500);
+      queueAncestorUpdates(uri.fsPath, provider, 500);
+    });
+
+    lowPriorityWatcher.onDidChange((uri: vscode.Uri) => {
+      if (uri.scheme !== 'file' || shouldSkipFile(uri.fsPath)) {
+        return;
+      }
+      invalidateFolderCounts(uri.fsPath);
+      queueUpdate(uri, provider, 500);
+      queueAncestorUpdates(uri.fsPath, provider, 500);
     });
 
     lowPriorityWatcher.onDidDelete((uri: vscode.Uri) => {
@@ -516,7 +598,7 @@ function setupFileWatcher(context: vscode.ExtensionContext, provider: LineLensDe
       decorationCache.delete(uri.fsPath);
       fileSizeCache.delete(uri.fsPath);
       invalidateFolderCounts(uri.fsPath);
-      queueUpdate(vscode.Uri.file(path.dirname(uri.fsPath)), provider, 500);
+      queueAncestorUpdates(uri.fsPath, provider, 500);
     });
 
     context.subscriptions.push(lowPriorityWatcher);
@@ -541,7 +623,7 @@ function setupFileWatcher(context: vscode.ExtensionContext, provider: LineLensDe
       if (uri.scheme === 'file' && !shouldSkipFile(uri.fsPath)) {
         invalidateFolderCounts(uri.fsPath);
         queueUpdate(uri, provider, 150);
-        queueUpdate(vscode.Uri.file(path.dirname(uri.fsPath)), provider, 150);
+        queueAncestorUpdates(uri.fsPath, provider, 150);
       }
     }),
   );

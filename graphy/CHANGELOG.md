@@ -2,6 +2,15 @@
 
 All notable changes to the "graphy" extension will be documented in this file.
 
+## [0.0.9]
+
+- Fix LineLens folder badges not updating for external edits (git pull, terminal, other tools) — file watchers now listen for change events, not just create/delete
+- Fix LineLens folder badges going stale for ancestor folders above the one directly changed
+- Fix LineLens folder line-count totals silently including files under folders excluded from display (`.next`, `.nuxt`, `.cache`, `coverage`, etc.) by unifying the exclude glob with the skip list
+- Fix LineLens and Graphy report tracking different sets of directories (e.g. `.github`, `.idea`) by sharing one ignore-list config between the client and server
+- Rework LineLens folder counting to sum cached child totals instead of re-scanning the whole subtree on every update
+- Fix a deleted/unreadable file leaving a stale line-count badge behind
+
 ## [0.0.8]
 
 - Fix logo and screenshot not rendering on the Marketplace/OpenVSX listing pages (relative HTML `<img>` paths aren't rewritten by either registry; switched to absolute GitHub raw URLs)
