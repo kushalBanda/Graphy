@@ -2,7 +2,7 @@
 
 All notable changes to the "graphy" extension will be documented in this file.
 
-## [Unreleased]
+## [1.0.0] - 2026-09-19
 
 - Include dotfiles and non-excluded dot-directories such as `.gitignore`, `.claude`, and `.codex` in Graphy reports, LineLens, and Line Rank
 - Exclude filesystem symlinks from Graphy reports to prevent recursive or out-of-workspace traversal

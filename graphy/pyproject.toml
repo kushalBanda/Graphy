@@ -1,6 +1,6 @@
 [project]
 name = "graphy"
-version = "0.1.0"
+version = "1.0.0"
 description = "Graphy codebase structure analysis engine"
 readme = "README.md"
 requires-python = ">=3.13"
