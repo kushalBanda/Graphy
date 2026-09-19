@@ -2,6 +2,13 @@
 
 All notable changes to the "graphy" extension will be documented in this file.
 
+## [0.0.10]
+
+- Align all active product surfaces with the Graphy name
+- Position Graphy as a fast way to understand an unfamiliar codebase
+- Refresh repository and registry documentation around Graphy reports, LineLens, and Line Rank
+- Add a live Open VSX download badge linked to the Graphy listing
+
 ## [0.0.9]
 
 - Fix LineLens folder badges not updating for external edits (git pull, terminal, other tools) — file watchers now listen for change events, not just create/delete

@@ -1,13 +1,13 @@
 {
   "name": "graphy",
   "displayName": "Graphy",
-  "description": "Graphy tracks where code is used and where it isn't.",
+  "description": "Understand any codebase fast with structural reports, line-count badges, and file rankings.",
   "publisher": "kushalBanda",
   "repository": {
     "type": "git",
     "url": "https://github.com/kushalBanda/Graphy.git"
   },
-  "version": "0.0.9",
+  "version": "0.0.10",
   "icon": "assets/icon.png",
   "engines": {
     "vscode": "^1.91.0"

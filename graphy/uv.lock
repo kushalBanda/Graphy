@@ -23,7 +23,7 @@ wheels = [
 ]
 
 [[package]]
-name = "linetrace"
+name = "graphy"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

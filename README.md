@@ -1,52 +1,61 @@
-# LineTrace
+![Graphy logo](graphy/assets/icon.png)
 
-LineTrace tracks where code is used and where it isn’t.
+# Graphy
 
-## Details
+**Understand any codebase fast.**
 
-LineTrace scans the first workspace folder, builds a lightweight structural summary, and writes a `LineTrace.md` report at the workspace root. The report includes a directory tree, file counts, and extension breakdowns so you can share or paste a high-signal overview into AI tools or code reviews.
+![Open VSX downloads](https://img.shields.io/open-vsx/dt/kushalBanda/graphy?style=flat-square&label=Open%20VSX%20downloads)![Open VSX version](https://img.shields.io/open-vsx/v/kushalBanda/graphy?style=flat-square&label=Open%20VSX)![MIT license](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
 
-## Features
+Graphy gives developers a quick, useful map of an unfamiliar repository without leaving the editor. See its structure, measure code size, and find the files that deserve attention first.
 
-- Generate a `LineTrace.md` report from `LineTrace: Generate Codebase Analysis`
-- Summaries for total files, total directories, and extension breakdowns
-- Readable directory tree for fast repo orientation
-- Auto-open the generated report on completion
-- LineLens badges showing line counts in the Explorer
-- Refresh LineLens data with `LineLens: Refresh Line Counts`
+## What Graphy Shows
 
-## Screenshot
 
-![LineTrace with LineLens line counts](graphy/assets/Full.png)
 
-## Usage
+### Codebase report
 
-Once installed, open a folder in VS Code and run the command:
+Run `Graphy: Generate Codebase Analysis` to create `Graphy.md` in your workspace root. The report contains:
 
-- Command Palette: `LineTrace: Generate Codebase Analysis`
-- Output: A `LineTrace.md` file appears in the workspace root and opens automatically
-- LineLens: Line counts appear next to files and folders in the Explorer
-- Manual refresh: Run `LineLens: Refresh Line Counts`
+- A readable directory tree
+- Total file and directory counts
+- A breakdown by file extension
+- A compact overview you can share in reviews or give to an AI coding tool
 
-## Performance Notes
+![Graphy codebase report open in VS Code](graphy/assets/Graphy.png)
 
-- Analysis runs on the first workspace folder when multiple folders are open
-- Large repositories may take longer to process depending on filesystem size
+### LineLens
 
-## Installation
+LineLens adds live line-count badges to files and folders in the Explorer. Counts refresh as files change, including edits made by Git, terminals, and other tools.
 
-1. Install the extension from the VS Code Marketplace
-2. Reload VS Code
-3. Run `LineTrace: Generate Codebase Analysis` from the Command Palette
+### Line Rank
 
-## Extension Settings
+Line Rank lists workspace files and folders by line count. Expand a folder to see its language breakdown, then open any ranked file directly from the panel.
 
-This extension has no configurable settings at this time.
+![Graphy LineLens badges and Line Rank panel](graphy/assets/full.png)
 
-## Changelog
+## Install
 
-See `CHANGELOG.md` for release notes and feature history.
+[Install Graphy from Open VSX](https://open-vsx.org/extension/kushalBanda/graphy), or search for **Graphy** in an editor that uses the Open VSX Registry.
+
+Graphy supports VS Code-compatible editors running VS Code API `1.91.0` or newer.
+
+## Use
+
+1. Open a folder or workspace.
+2. Run `Graphy: Generate Codebase Analysis` from the Command Palette.
+3. Read the generated `Graphy.md` report.
+4. Use LineLens badges and the Line Rank panel in Explorer for live size signals.
+
+Commands:
+
+- `Graphy: Generate Codebase Analysis`
+- `Graphy: Refresh Line Rank`
+- `LineLens: Refresh Line Counts`
+
+## Development
+
+The extension source lives in `[graphy/](graphy/)`. See `[graphy/README.md](graphy/README.md)` for registry copy and `[graphy/CHANGELOG.md](graphy/CHANGELOG.md)` for release history.
 
 ## License
 
-This extension is licensed under the MIT License.
+[MIT](LICENSE)

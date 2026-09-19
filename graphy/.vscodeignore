@@ -1,8 +1,14 @@
 .vscode/**
 .vscode-test/**
+.claude/**
+**/.claude/**
 out/**
 node_modules/**
 src/**
+.python-version
+bun.lock
+pyproject.toml
+uv.lock
 .gitignore
 .yarnrc
 esbuild.js

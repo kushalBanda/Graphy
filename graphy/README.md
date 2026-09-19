@@ -4,59 +4,69 @@
 
 <h1 align="center">Graphy</h1>
 
-<p align="center">Graphy tracks where code is used and where it isn't.</p>
-
-## Details
-
-Graphy scans the first workspace folder, builds a lightweight structural summary, and writes a `Graphy.md` report at the workspace root. The report includes a directory tree, file counts, and extension breakdowns so you can share or paste a high-signal overview into AI tools or code reviews.
+<p align="center"><strong>Understand any codebase fast.</strong></p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/kushalBanda/Graphy/main/graphy/assets/Graphy.png" alt="Graphy.md report open in the editor" width="640" />
+  <a href="https://open-vsx.org/extension/kushalBanda/graphy"><img src="https://img.shields.io/open-vsx/dt/kushalBanda/graphy?style=flat-square&amp;label=Open%20VSX%20downloads" alt="Open VSX downloads" /></a>
+  <a href="https://open-vsx.org/extension/kushalBanda/graphy"><img src="https://img.shields.io/open-vsx/v/kushalBanda/graphy?style=flat-square&amp;label=Open%20VSX" alt="Open VSX version" /></a>
+  <a href="https://github.com/kushalBanda/Graphy/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT license" /></a>
 </p>
 
-## Features
+Graphy gives developers a quick, useful map of an unfamiliar repository without leaving the editor. See its structure, measure code size, and find the files that deserve attention first.
 
-- Generate a `Graphy.md` report from `Graphy: Generate Codebase Analysis`
-- Summaries for total files, total directories, and extension breakdowns
-- Readable directory tree for fast repo orientation
-- Auto-open the generated report on completion
-- LineLens badges showing line counts in the Explorer
-- Refresh LineLens data with `LineLens: Refresh Line Counts`
-- Line Rank panel in the Explorer, ranking files and folders by line count with a per-language breakdown
-- Refresh Line Rank with `Graphy: Refresh Line Rank`
+## What Graphy Shows
 
-## Screenshot
+### Codebase report
 
-![Graphy with LineLens line counts](https://raw.githubusercontent.com/kushalBanda/Graphy/main/graphy/assets/full.png)
+Run `Graphy: Generate Codebase Analysis` to create `Graphy.md` in your workspace root. The report contains:
 
-## Usage
+- A readable directory tree
+- Total file and directory counts
+- A breakdown by file extension
+- A compact overview you can share in reviews or give to an AI coding tool
 
-Once installed, open a folder in VS Code and run the command:
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kushalBanda/Graphy/main/graphy/assets/Graphy.png" alt="Graphy codebase report open in VS Code" width="720" />
+</p>
 
-- Command Palette: `Graphy: Generate Codebase Analysis`
-- Output: A `Graphy.md` file appears in the workspace root and opens automatically
-- LineLens: Line counts appear next to files and folders in the Explorer
-- Manual refresh: Run `LineLens: Refresh Line Counts`
+### LineLens
 
-## Performance Notes
+LineLens adds live line-count badges to files and folders in the Explorer. Counts refresh as files change, including edits made by Git, terminals, and other tools.
 
-- Analysis runs on the first workspace folder when multiple folders are open
-- Large repositories may take longer to process depending on filesystem size
+### Line Rank
 
-## Installation
+Line Rank lists workspace files and folders by line count. Expand a folder to see its language breakdown, then open any ranked file directly from the panel.
 
-1. Install the extension from the VS Code Marketplace
-2. Reload VS Code
-3. Run `Graphy: Generate Codebase Analysis` from the Command Palette
+![Graphy LineLens badges and Line Rank panel](https://raw.githubusercontent.com/kushalBanda/Graphy/main/graphy/assets/full.png)
 
-## Extension Settings
+## Install
 
-This extension has no configurable settings at this time.
+[Install Graphy from Open VSX](https://open-vsx.org/extension/kushalBanda/graphy), or search for **Graphy** in an editor that uses the Open VSX Registry.
 
-## Changelog
+Graphy supports VS Code-compatible editors running VS Code API `1.91.0` or newer.
 
-See `CHANGELOG.md` for release notes and feature history.
+## Use
 
-## License
+1. Open a folder or workspace.
+2. Run `Graphy: Generate Codebase Analysis` from the Command Palette.
+3. Read the generated `Graphy.md` report.
+4. Use LineLens badges and the Line Rank panel in Explorer for live size signals.
 
-This extension is licensed under the MIT License.
+Commands:
+
+- `Graphy: Generate Codebase Analysis`
+- `Graphy: Refresh Line Rank`
+- `LineLens: Refresh Line Counts`
+
+## Current Scope
+
+- Graphy analyzes the first folder in a multi-root workspace.
+- Large repositories take longer to scan.
+- Graphy reports repository structure and line counts. It does not analyze symbol references, dependencies, or runtime usage.
+- Graphy has no configurable settings yet.
+
+## Source and License
+
+Graphy is open source on [GitHub](https://github.com/kushalBanda/Graphy) and licensed under the [MIT License](https://github.com/kushalBanda/Graphy/blob/main/LICENSE).
+
+See the [changelog](https://github.com/kushalBanda/Graphy/blob/main/graphy/CHANGELOG.md) for release history.
