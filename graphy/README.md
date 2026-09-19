@@ -18,7 +18,7 @@ Graphy gives developers a quick, useful map of an unfamiliar repository without 
 
 ### Codebase report
 
-Run `Graphy: Generate Codebase Analysis` to create `Graphy.md` in your workspace root. The report contains:
+Run `Graphy: Generate Codebase Report` to create `Graphy.md` in your workspace root. The report contains:
 
 - A readable directory tree
 - Total file and directory counts
@@ -48,13 +48,13 @@ Graphy supports VS Code-compatible editors running VS Code API `1.91.0` or newer
 ## Use
 
 1. Open a folder or workspace.
-2. Run `Graphy: Generate Codebase Analysis` from the Command Palette.
+2. Run `Graphy: Generate Codebase Report` from the Command Palette.
 3. Read the generated `Graphy.md` report.
 4. Use LineLens badges and the Line Rank panel in Explorer for live size signals.
 
 Commands:
 
-- `Graphy: Generate Codebase Analysis`
+- `Graphy: Generate Codebase Report`
 - `Graphy: Refresh Line Rank`
 - `LineLens: Refresh Line Counts`
 

@@ -28,7 +28,7 @@
     "commands": [
       {
         "command": "graphy.generateGraphy",
-        "title": "Graphy: Generate Codebase Analysis"
+        "title": "Graphy: Generate Codebase Report"
       },
       {
         "command": "linelens.refresh",
