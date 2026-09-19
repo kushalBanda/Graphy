@@ -19,10 +19,9 @@ updates:
         update-types:
           - minor
           - patch
-    # @typescript-eslint 8.70.0 supports TypeScript < 6.1.0.
-    # Keep version updates within that peer range until the lint toolchain adds
-    # TypeScript 7 support. Dependabot security updates are unaffected.
+    # Major toolchain changes need coordinated compatibility work and review.
+    # This does not suppress Dependabot security updates.
     ignore:
-      - dependency-name: typescript
-        versions:
-          - '>= 7.0.0'
+      - dependency-name: '*'
+        update-types:
+          - version-update:semver-major
