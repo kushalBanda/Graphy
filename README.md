@@ -1,4 +1,6 @@
-![Graphy logo](graphy/assets/icon.png)
+<p align="center">
+  <img src="graphy/assets/icon.png" alt="Graphy logo" width="96">
+</p>
 
 # Graphy
 
