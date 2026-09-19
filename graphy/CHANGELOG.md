@@ -2,6 +2,10 @@
 
 All notable changes to the "graphy" extension will be documented in this file.
 
+## [Unreleased]
+
+- Include dotfiles and non-excluded dot-directories such as `.gitignore`, `.claude`, and `.codex` in Graphy reports, LineLens, and Line Rank
+
 ## [0.0.10]
 
 - Align all active product surfaces with the Graphy name

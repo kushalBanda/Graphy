@@ -45,9 +45,8 @@ const CODE_FILE_EXTENSIONS = [
 
 export const CODE_GLOB = `**/*.{${CODE_FILE_EXTENSIONS.map((ext) => ext.slice(1)).join(',')}}`;
 // Built from SKIPPED_FOLDERS so the glob and the display-skip list never drift apart.
-// Also excludes any dot-folder generically, mirroring shouldSkipFolder's fallback
-// and the server's `startswith('.')` rule.
-export const EXCLUDE_GLOB = `{${SKIPPED_FOLDERS.map((folder) => `**/${folder}/**`).join(',')},**/.*/**}`;
+// Dotfiles and non-excluded dot-folders are intentionally included.
+export const EXCLUDE_GLOB = `{${SKIPPED_FOLDERS.map((folder) => `**/${folder}/**`).join(',')}}`;
 
 export const LINE_LENS_CONFIG = DEFAULT_CONFIG;
 
@@ -159,12 +158,6 @@ export function shouldSkipFolder(folderPath: string): boolean {
     if (normalizedPath.includes(folderPattern) || normalizedPath.endsWith(endPattern)) {
       return true;
     }
-  }
-
-  // Generic dot-folder skip, matching the server's `startswith('.')` rule, so
-  // folders like .github/.storybook aren't tracked client-side only.
-  if (path.basename(folderPath).startsWith('.')) {
-    return true;
   }
 
   return false;

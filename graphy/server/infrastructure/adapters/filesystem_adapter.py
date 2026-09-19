@@ -52,31 +52,29 @@ class FilesystemAdapter:
         structure_tree = self._build_tree(project_path)
         
         for root, dirs, file_list in os.walk(project_path):
-            # Skip hidden directories, common ignore directories, and nested ignore paths
+            # Skip generated/dependency directories and nested ignore paths.
+            # Keep dotfiles and non-excluded dot-directories in Graphy reports.
             dirs[:] = [
                 d for d in dirs
-                if not d.startswith('.')
-                and d not in IGNORED_DIRS
+                if d not in IGNORED_DIRS
                 and not _is_nested_ignored(root, project_path, d)
             ]
 
             for file in file_list:
-                if not file.startswith('.'):
-                    file_path = os.path.join(root, file)
-                    files.append(file_path)
-                    
-                    # Count file extensions
-                    _, ext = os.path.splitext(file)
-                    if ext:
-                        file_extensions[ext] = file_extensions.get(ext, 0) + 1
+                file_path = os.path.join(root, file)
+                files.append(file_path)
+
+                # Count file extensions
+                _, ext = os.path.splitext(file)
+                if ext:
+                    file_extensions[ext] = file_extensions.get(ext, 0) + 1
         
         # Get all directories
         for root, dirs, _ in os.walk(project_path):
-            # Skip hidden, common ignore directories, and nested ignore paths
+            # Skip generated/dependency directories and nested ignore paths.
             dirs[:] = [
                 d for d in dirs
-                if not d.startswith('.')
-                and d not in IGNORED_DIRS
+                if d not in IGNORED_DIRS
                 and not _is_nested_ignored(root, project_path, d)
             ]
             for d in dirs:
@@ -102,7 +100,7 @@ class FilesystemAdapter:
 
         try:
             for item in os.listdir(path):
-                if item.startswith('.') or item in IGNORED_DIRS:
+                if item in IGNORED_DIRS:
                     continue
                 if os.path.isdir(os.path.join(path, item)) and _is_nested_ignored(path, root, item):
                     continue
