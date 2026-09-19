@@ -13,6 +13,16 @@ updates:
     schedule:
       interval: weekly
     groups:
-      npm-dependencies:
+      npm-minor-and-patch:
         patterns:
           - '*'
+        update-types:
+          - minor
+          - patch
+    # @typescript-eslint 8.70.0 supports TypeScript < 6.1.0.
+    # Keep version updates within that peer range until the lint toolchain adds
+    # TypeScript 7 support. Dependabot security updates are unaffected.
+    ignore:
+      - dependency-name: typescript
+        versions:
+          - '>= 7.0.0'
