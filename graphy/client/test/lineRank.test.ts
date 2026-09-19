@@ -1,5 +1,6 @@
 import * as assert from 'assert';
 import * as vscode from 'vscode';
+import * as path from 'path';
 import { LineRankProvider, LineRankItem } from '../linelens/LineRankProvider';
 
 suite('LineRank', () => {
@@ -41,5 +42,30 @@ suite('LineRank', () => {
     const children = await provider.getChildren(folder);
     assert.ok(children.length > 0, 'expected at least one language row');
     assert.ok(children.every((child) => child.kind === 'language'));
+  });
+
+  test('includes an extensionless dotfile nested in an allowed directory', async () => {
+    const root = vscode.workspace.workspaceFolders?.[0].uri;
+    assert.ok(root, 'expected a workspace folder');
+
+    const fixtureName = '.graphy-line-rank-dotfile-test';
+    const fixture = vscode.Uri.joinPath(root!, fixtureName);
+    const dotfile = vscode.Uri.joinPath(fixture, '.gitignore');
+
+    await vscode.workspace.fs.createDirectory(fixture);
+    await vscode.workspace.fs.writeFile(dotfile, Buffer.from('first\nsecond\n'));
+
+    try {
+      const provider = new LineRankProvider();
+      const items = await provider.getChildren();
+      const fixtureItem = items.find(
+        (item) => item.kind === 'entry' && path.basename(item.fsPath ?? '') === fixtureName,
+      );
+
+      assert.ok(fixtureItem, 'expected the fixture directory in Line Rank');
+      assert.strictEqual(fixtureItem.description, '2');
+    } finally {
+      await vscode.workspace.fs.delete(fixture, { recursive: true, useTrash: false });
+    }
   });
 });

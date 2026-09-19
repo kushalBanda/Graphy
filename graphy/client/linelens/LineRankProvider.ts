@@ -55,9 +55,25 @@ export class LineRankItem extends vscode.TreeItem {
   }
 }
 
+async function findCountableFiles(folderPath: string): Promise<vscode.Uri[]> {
+  const [codeFiles, dotfiles] = await Promise.all([
+    vscode.workspace.findFiles(
+      new vscode.RelativePattern(folderPath, CODE_GLOB),
+      EXCLUDE_GLOB,
+      LINE_LENS_CONFIG.maxFolderFiles,
+    ),
+    vscode.workspace.findFiles(
+      new vscode.RelativePattern(folderPath, '**/.*'),
+      EXCLUDE_GLOB,
+      LINE_LENS_CONFIG.maxFolderFiles,
+    ),
+  ]);
+
+  return Array.from(new Map([...codeFiles, ...dotfiles].map((file) => [file.fsPath, file])).values());
+}
+
 async function countFolderLinesForRank(folderPath: string): Promise<number> {
-  const includePattern = new vscode.RelativePattern(folderPath, CODE_GLOB);
-  const files = await vscode.workspace.findFiles(includePattern, EXCLUDE_GLOB, LINE_LENS_CONFIG.maxFolderFiles);
+  const files = await findCountableFiles(folderPath);
   let total = 0;
   for (const file of files) {
     total += await countLines(file.fsPath);
@@ -151,8 +167,7 @@ export class LineRankProvider implements vscode.TreeDataProvider<LineRankItem> {
     const breakdown = new Map<string, number>();
 
     if (isDirectory) {
-      const includePattern = new vscode.RelativePattern(fsPath, CODE_GLOB);
-      const files = await vscode.workspace.findFiles(includePattern, EXCLUDE_GLOB, LINE_LENS_CONFIG.maxFolderFiles);
+      const files = await findCountableFiles(fsPath);
       for (const file of files) {
         const ext = path.extname(file.fsPath).toLowerCase() || '(no ext)';
         const lines = await countLines(file.fsPath);

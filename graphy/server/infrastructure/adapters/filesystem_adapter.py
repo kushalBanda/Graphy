@@ -56,12 +56,15 @@ class FilesystemAdapter:
             # Keep dotfiles and non-excluded dot-directories in Graphy reports.
             dirs[:] = [
                 d for d in dirs
-                if d not in IGNORED_DIRS
+                if not os.path.islink(os.path.join(root, d))
+                and d not in IGNORED_DIRS
                 and not _is_nested_ignored(root, project_path, d)
             ]
 
             for file in file_list:
                 file_path = os.path.join(root, file)
+                if os.path.islink(file_path):
+                    continue
                 files.append(file_path)
 
                 # Count file extensions
@@ -74,7 +77,8 @@ class FilesystemAdapter:
             # Skip generated/dependency directories and nested ignore paths.
             dirs[:] = [
                 d for d in dirs
-                if d not in IGNORED_DIRS
+                if not os.path.islink(os.path.join(root, d))
+                and d not in IGNORED_DIRS
                 and not _is_nested_ignored(root, project_path, d)
             ]
             for d in dirs:
@@ -100,12 +104,13 @@ class FilesystemAdapter:
 
         try:
             for item in os.listdir(path):
+                item_path = os.path.join(path, item)
+                if os.path.islink(item_path):
+                    continue
                 if item in IGNORED_DIRS:
                     continue
-                if os.path.isdir(os.path.join(path, item)) and _is_nested_ignored(path, root, item):
+                if os.path.isdir(item_path) and _is_nested_ignored(path, root, item):
                     continue
-
-                item_path = os.path.join(path, item)
 
                 if os.path.isdir(item_path):
                     tree[item] = self._build_tree(item_path, root)

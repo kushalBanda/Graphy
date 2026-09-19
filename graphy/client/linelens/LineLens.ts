@@ -214,9 +214,9 @@ function queueAncestorUpdates(
   }
 }
 
-function isCountableFile(filePath: string): boolean {
+export function isCountableFile(filePath: string): boolean {
   const ext = path.extname(filePath).toLowerCase();
-  return CODE_FILE_EXTENSIONS.includes(ext);
+  return CODE_FILE_EXTENSIONS.includes(ext) || path.basename(filePath).startsWith('.');
 }
 
 // Bottom-up, per-folder cached sum: each folder counts only its own direct
@@ -305,6 +305,14 @@ async function initializeDecorations(provider: LineLensDecorationProvider) {
         );
 
         await processBatchesWithDelay(lowPriorityFiles, provider, DEFAULT_CONFIG.batchSize, 100);
+
+        const dotfiles = await vscode.workspace.findFiles(
+          new vscode.RelativePattern(folder, '**/.*'),
+          EXCLUDE_GLOB,
+          1000,
+        );
+
+        await processBatchesWithDelay(dotfiles, provider, 100, 50);
       } catch (error) {
         console.error(`LineLens: error initializing ${folder.uri.fsPath}`, error);
       }
@@ -596,6 +604,42 @@ function setupFileWatcher(context: vscode.ExtensionContext, provider: LineLensDe
 
     context.subscriptions.push(lowPriorityWatcher);
     watchers.push(lowPriorityWatcher);
+
+    const dotfileWatcher = vscode.workspace.createFileSystemWatcher(
+      new vscode.RelativePattern(folder, '**/.*'),
+      false,
+      false,
+      false,
+    );
+
+    dotfileWatcher.onDidCreate((uri: vscode.Uri) => {
+      if (uri.scheme !== 'file' || shouldSkipFile(uri.fsPath)) {
+        return;
+      }
+      invalidateFolderCounts(uri.fsPath);
+      queueUpdate(uri, provider);
+      queueAncestorUpdates(uri.fsPath, provider);
+    });
+
+    dotfileWatcher.onDidChange((uri: vscode.Uri) => {
+      if (uri.scheme !== 'file' || shouldSkipFile(uri.fsPath)) {
+        return;
+      }
+      invalidateFolderCounts(uri.fsPath);
+      queueUpdate(uri, provider);
+      queueAncestorUpdates(uri.fsPath, provider);
+    });
+
+    dotfileWatcher.onDidDelete((uri: vscode.Uri) => {
+      lineCountCache.delete(uri.fsPath);
+      decorationCache.delete(uri.fsPath);
+      fileSizeCache.delete(uri.fsPath);
+      invalidateFolderCounts(uri.fsPath);
+      queueAncestorUpdates(uri.fsPath, provider);
+    });
+
+    context.subscriptions.push(dotfileWatcher);
+    watchers.push(dotfileWatcher);
   }
 
   context.subscriptions.push(
