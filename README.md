@@ -58,6 +58,10 @@ Commands:
 
 The extension source lives in `[graphy/](graphy/)`. See `[graphy/README.md](graphy/README.md)` for registry copy and `[graphy/CHANGELOG.md](graphy/CHANGELOG.md)` for release history.
 
+## Contribute and support
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening an issue or pull request. See [SUPPORT.md](SUPPORT.md) for usage help, [SECURITY.md](SECURITY.md) for private vulnerability reporting, and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community expectations.
+
 ## License
 
 [MIT](LICENSE)

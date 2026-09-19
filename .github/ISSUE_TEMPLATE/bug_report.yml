@@ -1,0 +1,40 @@
+name: Bug report
+description: Report reproducible Graphy behavior.
+title: '[Bug]: '
+body:
+  - type: markdown
+    attributes:
+      value: 'For security vulnerabilities, use the private path in SECURITY.md. Do not file them here.'
+  - type: input
+    id: graphy-version
+    attributes:
+      label: Graphy version
+      description: Find this in your editor's Extensions view.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Editor, version, and operating system
+      placeholder: VS Code 1.xx on macOS 15
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: '1. ...\n2. ...\n3. ...'
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
