@@ -1,0 +1,23 @@
+name: Question and support
+description: Ask for help using or developing Graphy.
+title: '[Question]: '
+body:
+  - type: input
+    id: graphy-version
+    attributes:
+      label: Graphy version
+      description: Find this in your editor's Extensions view.
+  - type: input
+    id: environment
+    attributes:
+      label: Editor, version, and operating system
+      placeholder: VS Code 1.xx on macOS 15
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: Include what you tried and expected to happen.
+    validations:
+      required: true

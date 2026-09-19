@@ -1,6 +1,6 @@
 # Support
 
-For how-to questions, first check the [README](README.md) and extension commands. For a reproducible defect, use the bug-report form. For a bounded product idea, use the feature-request form.
+For how-to questions, first check the [README](README.md) and extension commands. If the question remains, use the Question and support issue form. For a reproducible defect, use the bug-report form. For a bounded product idea, use the feature-request form.
 
 Do not use public issues for security vulnerabilities. Follow [SECURITY.md](SECURITY.md).
 
